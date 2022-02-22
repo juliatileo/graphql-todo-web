@@ -26,6 +26,7 @@ export const Home: React.FC = (): JSX.Element => {
       </CardContainer>
       <InputContainer>
         <AddInput
+          placeholder="Create a todo..."
           onClick={async (title: string) => {
             await addTodo({ variables: { title } });
             await refetch();

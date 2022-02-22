@@ -58,6 +58,9 @@ export const TodoCard: React.FC<TodoCardProps> = ({
         }}
       >
         <AddInput
+          placeholder={`Update "${
+            todo.title.length >= 10 ? todo.title.substring(0, 10) : todo.title
+          }"`}
           onClick={async (title: string) => {
             await updateTodo({ variables: { id: todo.id, title } });
 

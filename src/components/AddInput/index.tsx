@@ -8,6 +8,7 @@ import { Container, Input, BtnCheck } from "./styled";
 
 export const AddInput: React.FC<AddInputProps> = ({
   onClick,
+  placeholder,
 }: AddInputProps): JSX.Element => {
   const [title, setTitle] = useState<string>();
 
@@ -27,7 +28,7 @@ export const AddInput: React.FC<AddInputProps> = ({
     >
       <Input
         type="text"
-        placeholder="Type here..."
+        placeholder={placeholder}
         onChange={(e) => setTitle(e.target.value)}
         ref={(el) => {
           if (el) inputEl = el;
