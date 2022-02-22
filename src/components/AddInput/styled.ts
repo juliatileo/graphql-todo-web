@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.form`
   display: flex;
   align-items: center;
   border: 1px solid #eee;
   border-radius: 10px;
   padding: 8px;
+  background-color: #fff;
 `;
 
 export const Input = styled.input`

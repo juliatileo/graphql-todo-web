@@ -1,24 +1,30 @@
 import { useState } from "react";
 
 import { FaCheck } from "react-icons/fa";
-import { useMutation } from "@apollo/client";
-
-import { ADD_TODO } from "./mutations";
 
 import { AddInputProps } from "./types";
 
 import { Container, Input, BtnCheck } from "./styled";
 
 export const AddInput: React.FC<AddInputProps> = ({
-  refetch,
+  onClick,
 }: AddInputProps): JSX.Element => {
   const [title, setTitle] = useState<string>();
-  const [addTodo] = useMutation(ADD_TODO);
 
   let inputEl: HTMLInputElement;
 
   return (
-    <Container>
+    <Container
+      onSubmit={async (e) => {
+        e.preventDefault();
+
+        if (title) {
+          await onClick(title);
+
+          inputEl.value = "";
+        }
+      }}
+    >
       <Input
         type="text"
         placeholder="Type here..."
@@ -27,16 +33,7 @@ export const AddInput: React.FC<AddInputProps> = ({
           if (el) inputEl = el;
         }}
       />
-      <BtnCheck
-        onClick={async () => {
-          if (title) {
-            await addTodo({ variables: { title } });
-            await refetch();
-
-            inputEl.value = "";
-          }
-        }}
-      >
+      <BtnCheck type="submit">
         <FaCheck size={20} />
       </BtnCheck>
     </Container>

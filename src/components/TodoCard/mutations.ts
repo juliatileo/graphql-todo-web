@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const CHECK_TODO = gql`
+export const UPDATE_TODO = gql`
   mutation updateTodo($id: ID!, $title: String, $done: Boolean) {
     updateTodo(id: $id, title: $title, done: $done) {
       id

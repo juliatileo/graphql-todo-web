@@ -2,18 +2,21 @@ import { useState } from "react";
 
 import { useMutation } from "@apollo/client";
 import { FaTrash, FaEdit } from "react-icons/fa";
+import { Modal } from "@mui/material";
 
-import { CHECK_TODO, DELETE_TODO } from "./mutations";
+import { UPDATE_TODO, DELETE_TODO } from "./mutations";
 import { TodoCardProps } from "./types";
 
 import { Container, Content, Check, TodoOptions, BtnOption } from "./styled";
+import { AddInput } from "../AddInput";
 
 export const TodoCard: React.FC<TodoCardProps> = ({
   todo,
   refetch,
 }: TodoCardProps): JSX.Element => {
   const [checked, setChecked] = useState<boolean>(todo.done);
-  const [checkTodo] = useMutation(CHECK_TODO);
+  const [open, setOpen] = useState<boolean>(false);
+  const [updateTodo] = useMutation(UPDATE_TODO);
   const [deleteTodo] = useMutation(DELETE_TODO);
 
   return (
@@ -24,14 +27,14 @@ export const TodoCard: React.FC<TodoCardProps> = ({
         onChange={async (e) => {
           setChecked(e.target.checked);
 
-          await checkTodo({
+          await updateTodo({
             variables: { id: todo.id, done: e.target.checked },
           });
         }}
       />
       <Content checked={checked}>{todo.title}</Content>
       <TodoOptions>
-        <BtnOption variation="edit">
+        <BtnOption variation="edit" onClick={() => setOpen(true)}>
           <FaEdit size={16} />
         </BtnOption>
         <BtnOption
@@ -45,6 +48,25 @@ export const TodoCard: React.FC<TodoCardProps> = ({
           <FaTrash />
         </BtnOption>
       </TodoOptions>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <AddInput
+          onClick={async (title: string) => {
+            await updateTodo({ variables: { id: todo.id, title } });
+
+            await refetch();
+
+            setOpen(false);
+          }}
+        />
+      </Modal>
     </Container>
   );
 };
