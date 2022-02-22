@@ -1,7 +1,18 @@
-import React from "react";
+import { ApolloProvider } from "@apollo/client";
+
+import { client } from "./utils/client";
+
+import { Home } from "./pages/Home";
+
+import { GlobalStyles } from "./styles/GlobalStyles";
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <ApolloProvider client={client}>
+      <GlobalStyles />
+      <Home />
+    </ApolloProvider>
+  );
 }
 
 export default App;
