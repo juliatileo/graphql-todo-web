@@ -5,7 +5,7 @@
 Simple todo application developed with GraphQL
 
 ## 🚧 Built With
-- Node.js
+- React.js
 - TypeScript
 - GraphQL
 
